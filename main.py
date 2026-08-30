@@ -29,9 +29,9 @@ def save_history(session_id:str, history:list)-> None:
 
 
 # ── per request ───────────────────────────────────────
-def handle_query(user_query: str) -> str:
+def handle_query(user_query: str, session_id: str | None = None) -> str:
 
-    session_id= str(uuid.uuid4())
+    session_id = session_id or str(uuid.uuid4())
 
     # redis function to load the prev conversation history
     history = get_history(session_id)

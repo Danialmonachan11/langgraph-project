@@ -1,0 +1,11 @@
+langgraph
+langgraph-checkpoint-postgres
+langchain-openai
+redis
+sqlalchemy
+psycopg2-binary
+psycopg[binary]
+pydantic-settings
+numpy
+openai
+pytest

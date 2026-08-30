@@ -36,11 +36,10 @@ def get(query: str, redis_client) -> str | None:
     redis_data = redis_client.lrange("nova:cache",0,-1)     # this function retrives data using (key,start,stop) where -1 means last element
     for i in redis_data:
         entry = json.loads(i)
-        similarity = cosine_similarity(entry["embedded_query"],embedded_query)
+        similarity = cosine_similarity(entry["embeddings"],embedded_query)
         if similarity>0.9:
             return entry["response"]
-        else:
-            None
+    return None
 
 
 def set(query: str, response: str, redis_client) -> None:

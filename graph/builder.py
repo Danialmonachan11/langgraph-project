@@ -15,7 +15,11 @@ from graph.edges import route_intent, route_validation_agent, route_after_execut
 
 
 settings = get_settings()
-checkpointer = PostgresSaver.from_conn_string(settings.checkpoint_db_url)
+# _checkpointer_cm must stay referenced: it's a context manager, and letting it
+# get garbage-collected runs its __exit__ and closes the connection
+_checkpointer_cm = PostgresSaver.from_conn_string(settings.checkpoint_db_url)
+checkpointer = _checkpointer_cm.__enter__()
+checkpointer.setup()
 
 graph = StateGraph(NovaState)
 
